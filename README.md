@@ -245,10 +245,79 @@ You'll see a _Save As…_ dialog box, asking where you want to save your exporte
 
 ![](images/export-localhost-key-save.png)
 
-Again, you can give the file any name which makes sense to you. I would recommend giving the file the same name as the domain + `.key`, e.g., `localhost.key` in this example. For the **File Format**, choose _Certificate (.cer)_.
+Again, you can give the file any name which makes sense to you. I would recommend giving the file the same name as the domain + `.key`, e.g., `localhost.key` in this example. For the **File Format**, choose _Personal Information Exchange (.p12)_.
 
 When you're done, choose the _Save_ button. You will probably see a dialog which complains about the file extension.
 
 ![](images/export-localhost-key-both.png)
 
 Choose _Use both_.
+
+## Converting Files into PEM Format
+
+Open _Terminal_, and navigate to the directory where we saved our exported files.
+
+```bash
+cd ~/.ssh/localhost/
+```
+
+We're going to use the `openssl` command to convert our exported files into the widely-supported PEM format.
+
+### Convert the Private Key from P12 → PEM
+
+```bash
+openssl pkcs12 -in localhost.key.p12 -nocerts -nodes | openssl rsa > localhost.key.pem
+```
+
+### Convert the Certificate from CER → PEM
+
+```bash
+openssl x509 -inform der -in localhost.cer -out localhost.cer.pem
+```
+
+### Convert the root CA from CER → PEM
+
+```bash
+openssl x509 -inform der -in ca-cert.cer -out ca-cert.cer.pem
+```
+
+### Confirming Files
+
+![](images/confirming.png)
+
+## Putting these Certificates to Use
+
+You now have a root CA, a certificate, and a private key that can be used on your local machine for faux-HTTPS connections.
+
+As an example for how these can be used, we'll install the [`http-server` package from npm](https://www.npmjs.com/package/http-server). (You'll need [Node.js](https://nodejs.org) installed; See [Install `npm` packages globally without sudo on macOS and Linux](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md) for how to do this without `sudo`.)
+
+### Installing `http-server`
+
+```bash
+npm install -g http-server
+```
+
+After the package is installed, you can run a local HTTPS server using the contents of the current directory.
+
+```bash
+http-server --ssl \
+    --cert ~/.ssh/localhost/star.mheducation.cer.pem \
+    --key ~/.ssh/localhost/star.mheducation.key.pem \
+    -p 8443
+```
+
+Now you can open <https://localhost:8443> in your web browser.
+
+## Pretending to be another website, locally
+
+Let's say that you want to pretend to be `fake.google.com`, locally.
+
+Perhaps you're testing something with CORS, or cookies, or something else where the domain name matters.
+
+1. After creating your root CA, create a new certificate where the common name is `*.google.com`. (Again, this will only work on your local machine.) Follow the same instructions you followed for `localhost`.
+
+1. Run `http-server` using your new fake `*.google.com` certificates. But instead, run it on port `443`. Since the port that we want to bind to is smaller than 1000, we'll need to use `sudo`.
+
+1. In your `/etc/hosts` file, add a line that says `127.0.0.1 fake.google.com`.
+
+1. In your web browser, visit <https://fake.google.com> and you'll see that it loads successfully. However, if you click on the lock in the address bar and view the certificate, you'll see that the certificate was issued by your own custom root CA.
