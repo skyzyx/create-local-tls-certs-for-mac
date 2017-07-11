@@ -6,7 +6,6 @@ The examples in this tutorial are from macOS Sierra (10.12).
 
 ## Table of Contents
 
-* [Table of Contents](#table-of-contents)
 * [Create a local Certificate Authority](#create-a-local-certificate-authority)
     * [Open the Certificate Assistant](#open-the-certificate-assistant)
     * [Enter the Values](#enter-the-values)
