@@ -190,3 +190,65 @@ When you're done, choose the _Continue_ button.
 You should notice that since we trusted our custom CA, and we configured that CA as the _Issuer_ for this certificate, that this certificate is already trusted by default.
 
 When you're done, choose the _Done_ button.
+
+## Exporting your Keypair Files
+
+### Export your Root CA Certificate
+
+Select your root CA.
+
+![](images/export-root-ca.png)
+
+Right-click (or control-click, or two-finger click) the new CA, and choose _Export…_.
+
+![](images/export-root-ca-export.png)
+
+You'll see a _Save As…_ dialog box, asking where you want to save your exported file. Type _Command-Shift-G_ (⌘⇧G) to bring up a sub-dialog where you can enter the path that you want to traverse to.
+
+![](images/export-root-ca-folder.png)
+
+You can put the files anywhere you'd like, but in this example, I'm going to use `~/.ssh/localhost/`.
+
+Since this path doesn’t exist by default, you can enter `~/.ssh/`, press _Return_, then choose the _New Folder_ button along the bottom-left, and name it _localhost_.
+
+![](images/export-root-ca-save.png)
+
+Again, you can give the file any name which makes sense to you. I'm going to use `ca-cert` in this example. For the **File Format**, choose _Certificate (.cer)_.
+
+When you're done, choose the _Save_ button.
+
+### Export your Certificate
+
+Select your certificate.
+
+![](images/export-localhost.png)
+
+Right-click (or control-click, or two-finger click) the new certificate, and choose _Export…_.
+
+You'll see a _Save As…_ dialog box, asking where you want to save your exported file.
+
+![](images/export-localhost-save.png)
+
+Again, you can give the file any name which makes sense to you. I would recommend giving the file the same name as the domain, e.g., `localhost` in this example. For the **File Format**, choose _Certificate (.cer)_.
+
+When you're done, choose the _Save_ button.
+
+### Export your Private Key
+
+Select the private key for your certificate.
+
+![](images/export-localhost-key.png)
+
+Right-click (or control-click, or two-finger click) the new private key, and choose _Export…_.
+
+You'll see a _Save As…_ dialog box, asking where you want to save your exported file.
+
+![](images/export-localhost-key-save.png)
+
+Again, you can give the file any name which makes sense to you. I would recommend giving the file the same name as the domain + `.key`, e.g., `localhost.key` in this example. For the **File Format**, choose _Certificate (.cer)_.
+
+When you're done, choose the _Save_ button. You will probably see a dialog which complains about the file extension.
+
+![](images/export-localhost-key-both.png)
+
+Choose _Use both_.
