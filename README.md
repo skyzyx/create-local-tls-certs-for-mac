@@ -4,19 +4,42 @@ Largely based on [“Generating Self-Signed SSL Certificates for Use with Bluemi
 
 The examples in this tutorial are from macOS Sierra (10.12).
 
+## Table of Contents
+
+* [Create a local Certificate Authority](#create-a-local-certificate-authority)
+    * [Open the Certificate Assistant](#open-the-certificate-assistant)
+    * [Enter the Values](#enter-the-values)
+    * [Created\!](#created)
+    * [Trust the New CA](#trust-the-new-ca)
+* [Create a local Certificate from your new Certificate Authority](#create-a-local-certificate-from-your-new-certificate-authority)
+    * [Open the Certificate Assistant](#open-the-certificate-assistant-1)
+    * [Create your Certificate](#create-your-certificate)
+    * [Configuring Validity](#configuring-validity)
+    * [Configuring the Organizational Unit](#configuring-the-organizational-unit)
+    * [Choose an Issuer](#choose-an-issuer)
+    * [Keypair Information](#keypair-information)
+    * [Key Usage Extension](#key-usage-extension)
+    * [Extended Key Usage Extension](#extended-key-usage-extension)
+    * [Basic Constraints](#basic-constraints)
+    * [Subject Alternate Name Extension](#subject-alternate-name-extension)
+    * [Specify a Location for the Certificate](#specify-a-location-for-the-certificate)
+    * [All Done\!](#all-done)
+
 ## Create a local Certificate Authority
 
 By creating a Certificate Authority (a.k.a., a “CA”) and trusting it locally, any certificate that we create using this CA will also be trusted locally. This can simplify the development of _HTTPS_ websites on your local machine.
 
 Start by opening _Keychain Access_. You can either search for it inside Spotlight, or you can traverse the file system for _Computer_ → _Applications_ → _Utilities_ → _Keychain Access_.
 
-### Create a Certificate Authority
+### Open the Certificate Assistant
 
 Go to the _Keychain Access_ menu, and choose _Certificate Assistant_ → _Create a Certificate Authority…_.
 
 ![](images/new-ca-selection.png)
 
 You should see the new Certificate Assistant.
+
+### Enter the Values
 
 ![](images/new-ca-start.png)
 
@@ -29,9 +52,13 @@ You should see the new Certificate Assistant.
 
 When you're done, choose the _Create_ button.
 
+### Created!
+
 ![](images/new-ca-done.png)
 
 All done! Feel free to close this window.
+
+### Trust the New CA
 
 Now, you should be looking at your Keychain. Select _My Certificates_ from the sidebar to filter down the list to what we care about.
 
@@ -58,3 +85,108 @@ All of the options should now flip to _Always Trust_.
 But we're not quite done! When we close the window, we'll be asked for our system password. You need to provide your password correctly before the settings will take effect.
 
 ![](images/new-ca-trust-done.png)
+
+## Create a local Certificate from your new Certificate Authority
+
+### Open the Certificate Assistant
+
+![](images/new-cert-menu.png)
+
+### Create your Certificate
+
+![](images/create-cert-start.png)
+
+1. **Name** should be the hostname you want to create the certificate for (e.g., `localhost`, `*.google.com`).
+1. **Identity Type** should be _Leaf_.
+1. **Certificate Type** should be _SSL Server_.
+1. **Let me override defaults** should be _checked_.
+
+When you're done, choose the _Continue_ button.
+
+### Configuring Validity
+
+![](images/create-cert-duration.png)
+
+The default _Validity Period_ is 365 days. You could also set it to 2 years (730 days), 3 years (1095 days), or any amount you want. (This is a local-only certificate, after all.)
+
+When you're done, choose the _Continue_ button.
+
+### Configuring the Organizational Unit
+
+![](images/create-cert-ou.png)
+
+1. **Email Address** should be your email address. Again, this is a local-only certificate, so this is generally unimportant.
+1. **Name (Common Name)** should be the hostname you want to create the certificate for (e.g., `localhost`, `*.google.com`).
+1. **Organization** should be your company or organization.
+1. **Organizational Unit** is a smaller group inside of your company or organization.
+1. **City**, **State**, **Country** should all be self-explanitory.
+
+When you're done, choose the _Continue_ button.
+
+### Choose an Issuer
+
+![](images/create-cert-issuer.png)
+
+This should be the certificate authority that you created earlier.
+
+When you're done, choose the _Continue_ button.
+
+### Keypair Information
+
+![](images/create-cert-rsa.png)
+
+Leave this as-is. When you're done, choose the _Continue_ button.
+
+### Key Usage Extension
+
+![](images/create-cert-key-usage.png)
+
+1. **Include Key Usage Extension** should be _checked_.
+1. **This extension is critical** should be _checked_.
+1. **Signature** should be _checked_.
+1. Everything else should be _unchecked_.
+
+When you're done, choose the _Continue_ button.
+
+### Extended Key Usage Extension
+
+![](images/create-cert-key-usage-extension.png)
+
+1. **Include Extended Key Usage Extension** should be _checked_.
+1. **This extension is critical** should be _checked_.
+1. **SSL Server Authentication** should be _checked_.
+1. Everything else should be _unchecked_.
+
+When you're done, choose the _Continue_ button.
+
+### Basic Constraints
+
+![](images/create-cert-basic-constraints.png)
+
+Leave this as-is. When you're done, choose the _Continue_ button.
+
+### Subject Alternate Name Extension
+
+![](images/create-cert-no-san.png)
+
+This _should_ be disabled because we don’t need a SAN. If you encounter an error with this selection, you can enable it and set the **dNSName** value to the same thing as your _Common Name_ was (e.g., `localhost`, `*.google.com`).
+
+![](images/create-cert-san.png)
+
+When you're done, choose the _Continue_ button.
+
+### Specify a Location for the Certificate
+
+![](images/create-cert-keychain.png)
+
+This should be your _login_ keychain, which gets unlocked whenever you login.
+
+When you're done, choose the _Continue_ button.
+
+### All Done!
+
+![](images/create-cert-done.png)
+
+You should notice that since we trusted our custom CA, and we configured that CA as the _Issuer_ for this certificate, that this certificate is already trusted by default.
+
+When you're done, choose the _Done_ button.
