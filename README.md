@@ -6,6 +6,7 @@ The examples in this tutorial are from macOS Sierra (10.12).
 
 ## Table of Contents
 
+* [Table of Contents](#table-of-contents)
 * [Create a local Certificate Authority](#create-a-local-certificate-authority)
     * [Open the Certificate Assistant](#open-the-certificate-assistant)
     * [Enter the Values](#enter-the-values)
@@ -24,6 +25,18 @@ The examples in this tutorial are from macOS Sierra (10.12).
     * [Subject Alternate Name Extension](#subject-alternate-name-extension)
     * [Specify a Location for the Certificate](#specify-a-location-for-the-certificate)
     * [All Done\!](#all-done)
+* [Exporting your Keypair Files](#exporting-your-keypair-files)
+    * [Export your Root CA Certificate](#export-your-root-ca-certificate)
+    * [Export your Certificate](#export-your-certificate)
+    * [Export your Private Key](#export-your-private-key)
+* [Converting Files into PEM Format](#converting-files-into-pem-format)
+    * [Convert the Private Key from P12 → PEM](#convert-the-private-key-from-p12--pem)
+    * [Convert the Certificate from CER → PEM](#convert-the-certificate-from-cer--pem)
+    * [Convert the root CA from CER → PEM](#convert-the-root-ca-from-cer--pem)
+    * [Confirming Files](#confirming-files)
+* [Putting these Certificates to Use](#putting-these-certificates-to-use)
+    * [Installing http\-server](#installing-http-server)
+* [Pretending to be another website, locally](#pretending-to-be-another-website-locally)
 
 ## Create a local Certificate Authority
 
