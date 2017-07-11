@@ -301,8 +301,8 @@ After the package is installed, you can run a local HTTPS server using the conte
 
 ```bash
 http-server --ssl \
-    --cert ~/.ssh/localhost/star.mheducation.cer.pem \
-    --key ~/.ssh/localhost/star.mheducation.key.pem \
+    --cert ~/.ssh/localhost/localhost.cer.pem \
+    --key ~/.ssh/localhost/localhost.key.pem \
     -p 8443
 ```
 
