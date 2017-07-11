@@ -12,5 +12,49 @@ Start by opening _Keychain Access_. You can either search for it inside Spotligh
 
 ### Create a Certificate Authority
 
+Go to the _Keychain Access_ menu, and choose _Certificate Assistant_ → _Create a Certificate Authority…_.
+
 ![](images/new-ca-selection.png)
 
+You should see the new Certificate Assistant.
+
+![](images/new-ca-start.png)
+
+1. Give it a name.
+1. **Identity Type** should be _Self Signed Root CA_.
+1. **User Certificate** should be _SSL Server_.
+1. **Let me override defaults** should be _unchecked_.
+1. **Make this CA the default** is optional.
+1. Add your email address.
+
+When you're done, choose the _Create_ button.
+
+![](images/new-ca-done.png)
+
+All done! Feel free to close this window.
+
+Now, you should be looking at your Keychain. Select _My Certificates_ from the sidebar to filter down the list to what we care about.
+
+![](images/new-ca-not-trusted.png)
+
+You'll notice that, by default, our new CA is not trusted. Right-click (or control-click, or two-finger click) the new CA, and choose _Get Info_.
+
+![](images/new-ca-get-info.png)
+
+Make sure that the _Trust_ section is visible. Click the small triangle if it isn't.
+
+You should see that the default settings are configured for _System Defaults_, and that “This root certificate is not trusted”.
+
+![](images/new-ca-system-defaults.png)
+
+Next to _When using this certificate:_, open the pull-down menu and choose _Always Trust_.
+
+![](images/new-ca-always-trust.png)
+
+All of the options should now flip to _Always Trust_.
+
+![](images/new-ca-trusted.png)
+
+But we're not quite done! When we close the window, we'll be asked for our system password. You need to provide your password correctly before the settings will take effect.
+
+![](images/new-ca-trust-done.png)
