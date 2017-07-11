@@ -320,8 +320,8 @@ Perhaps you're testing something with CORS, or cookies, or something else where 
 
    ```bash
    sudo http-server --ssl \
-       --cert ~/.ssh/localhost/localhost.cer.pem \
-       --key ~/.ssh/localhost/localhost.key.pem \
+       --cert ~/.ssh/localhost/star.google.cer.pem \
+       --key ~/.ssh/localhost/star.google.key.pem \
        -p 443
    ```
 
