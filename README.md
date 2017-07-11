@@ -318,6 +318,14 @@ Perhaps you're testing something with CORS, or cookies, or something else where 
 
 1. Run `http-server` using your new fake `*.google.com` certificates. But instead, run it on port `443`. Since the port that we want to bind to is smaller than 1000, we'll need to use `sudo`.
 
+   ```bash
+   sudo http-server --ssl \
+       --cert ~/.ssh/localhost/localhost.cer.pem \
+       --key ~/.ssh/localhost/localhost.key.pem \
+       -p 443
+   ```
+
+
 1. In your `/etc/hosts` file, add a line that says `127.0.0.1 fake.google.com`.
 
 1. In your web browser, visit <https://fake.google.com> and you'll see that it loads successfully. However, if you click on the lock in the address bar and view the certificate, you'll see that the certificate was issued by your own custom root CA.
